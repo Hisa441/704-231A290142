@@ -7,4 +7,5 @@ header { background: #3498db; color: white; padding: 40px 20px; text-align: cent
 .card:hover { background: #f9f9f9; transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 .card h3 { margin: 0 0 5px 0; color: #2980b9; }
 .old { background: #f4f6f7; border-color: #bdc3c7; }
+
 footer { text-align: center; padding: 20px; color: #7f8c8d; font-size: 0.9rem; }
