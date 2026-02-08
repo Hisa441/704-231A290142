@@ -1,22 +1,163 @@
-<div class="carousel-track-container">
-    <ul class="carousel-track">
-        <li class="carousel-slide current-slide">
-            <img class="carousel-image" src="images/hinh1.jpg" alt="Ảnh game 1">
-        </li>
-        <li class="carousel-slide">
-            <img class="carousel-image" src="images/hinh2.jpg" alt="Ảnh game 2">
-        </li>
-        <li class="carousel-slide">
-            <img class="carousel-image" src="images/hinh3.jpg" alt="Ảnh game 3">
-        </li>
-        <li class="carousel-slide">
-            <img class="carousel-image" src="images/hinh4.jpg" alt="Ảnh game 4">
-        </li>
-        <li class="carousel-slide">
-            <img class="carousel-image" src="images/hinh5.jpg" alt="Ảnh game 5">
-        </li>
-        <li class="carousel-slide">
-            <img class="carousel-image" src="images/hinh6.jpg" alt="Ảnh game 6">
-        </li>
-    </ul>
-</div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 1: Carousel Hình Ảnh Cá Nhân</title>
+    <style>
+        /* Yêu cầu: Responsive và CSS Transition */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f4f4f4;
+            margin: 0;
+            padding-top: 20px;
+        }
+
+        h1 { color: #333; margin-bottom: 20px; }
+
+        .carousel-container {
+            width: 90%;
+            max-width: 800px; /* Độ rộng tối đa */
+            height: 500px;    /* Chiều cao cố định để ảnh đều nhau */
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: #000; /* Nền đen để tôn ảnh */
+        }
+
+        .carousel-slide {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out; /* Hiệu ứng trượt mượt mà */
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Giữ nguyên tỉ lệ ảnh, không bị méo */
+            flex-shrink: 0;
+            background: #000;
+        }
+
+        /* Nút điều hướng Next/Prev */
+        .btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 5px;
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        .btn:hover { background: rgba(255, 255, 255, 0.8); color: black; }
+        .prev { left: 15px; }
+        .next { right: 15px; }
+
+        /* Logic giải thích */
+        .logic-box {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 800px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .home-btn {
+            margin-top: 20px;
+            margin-bottom: 40px;
+            padding: 10px 25px;
+            background: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ALBUM ẢNH CỦA TÔI</h1>
+
+    <div class="carousel-container">
+        <div class="carousel-slide" id="slideTrack">
+            <img src="images/hinh1.jpg" alt="Hình 1">
+            <img src="images/hinh2.jpg" alt="Hình 2">
+            <img src="images/hinh3.jpg" alt="Hình 3">
+            <img src="images/hinh4.jpg" alt="Hình 4">
+            <img src="images/hinh5.jpg" alt="Hình 5">
+            <img src="images/hinh6.jpg" alt="Hình 6">
+        </div>
+
+        <button class="btn prev" id="prevBtn">❮</button>
+        <button class="btn next" id="nextBtn">❯</button>
+    </div>
+
+    <div class="logic-box">
+        <h3>Giải thích Logic tư duy:</h3>
+        <p>1. <strong>Xử lý Index:</strong> Sử dụng biến <code>counter</code> chạy từ 0 đến 5. Khi bấm Next thì tăng, bấm Prev thì giảm.</p>
+        <p>2. <strong>Tránh lỗi giới hạn:</strong> Nếu counter vượt quá số lượng ảnh, hệ thống tự reset về 0 (tạo vòng lặp vô tận). Ngược lại nếu nhỏ hơn 0 thì nhảy về ảnh cuối.</p>
+        <p>3. <strong>Tự động chạy:</strong> Sử dụng hàm <code>setInterval</code> để kích hoạt nút Next mỗi 3 giây.</p>
+    </div>
+
+    <a href="index.html" class="home-btn">⬅ Quay về trang chủ</a>
+
+    <script>
+        const track = document.getElementById('slideTrack');
+        const images = document.querySelectorAll('.carousel-slide img');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let counter = 0;
+        let size = track.clientWidth; // Lấy chiều rộng khung hình
+
+        // Hàm cập nhật vị trí slide
+        function updateSlide() {
+            track.style.transform = 'translateX(' + (-size * counter) + 'px)';
+        }
+
+        // Sự kiện nút Next
+        nextBtn.addEventListener('click', () => {
+            if (counter >= images.length - 1) {
+                counter = 0; // Quay về đầu
+            } else {
+                counter++;
+            }
+            updateSlide();
+        });
+
+        // Sự kiện nút Prev
+        prevBtn.addEventListener('click', () => {
+            if (counter <= 0) {
+                counter = images.length - 1; // Quay về cuối
+            } else {
+                counter--;
+            }
+            updateSlide();
+        });
+
+        // Tự động chuyển sau 3 giây
+        setInterval(() => {
+            nextBtn.click();
+        }, 3000);
+
+        // Xử lý khi co giãn màn hình (Responsive)
+        window.addEventListener('resize', () => {
+            size = track.clientWidth;
+            updateSlide();
+        });
+    </script>
+
+</body>
+</html>
