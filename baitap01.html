@@ -1,44 +1,22 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Bài 1 - Carousel</title>
-    <style>
-        body { margin: 0; background: #222; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .slider { width: 800px; height: 400px; overflow: hidden; position: relative; border-radius: 10px; }
-        .slides { display: flex; transition: 0.5s; }
-        .slides img { width: 800px; height: 400px; object-fit: cover; }
-        .btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px; cursor: pointer; font-size: 20px; }
-        .prev { left: 10px; }
-        .next { right: 10px; }
-        .back { position: fixed; top: 20px; left: 20px; color: white; text-decoration: none; font-weight: bold; font-family: sans-serif; }
-    </style>
-</head>
-<body>
-    <a href="index.html" class="back">⬅ Về Menu</a>
-    <div class="slider">
-        <div class="slides" id="slides">
-            <img src="https://picsum.photos/800/400?random=1">
-            <img src="https://picsum.photos/800/400?random=2">
-            <img src="https://picsum.photos/800/400?random=3">
-            <img src="https://picsum.photos/800/400?random=4">
-            <img src="https://picsum.photos/800/400?random=5">
-            <img src="https://picsum.photos/800/400?random=6">
-        </div>
-        <button class="btn prev" onclick="move(-1)">❮</button>
-        <button class="btn next" onclick="move(1)">❯</button>
-    </div>
-    <script>
-        let idx = 0;
-        const slides = document.getElementById('slides');
-        const total = 6;
-        function move(n) {
-            idx += n;
-            if (idx >= total) idx = 0;
-            if (idx < 0) idx = total - 1;
-            slides.style.transform = `translateX(${-idx * 800}px)`;
-        }
-        setInterval(() => move(1), 3000);
-    </script>
-</body>
-</html>
+<div class="carousel-track-container">
+    <ul class="carousel-track">
+        <li class="carousel-slide current-slide">
+            <img class="carousel-image" src="images/hinh1.jpg" alt="Ảnh game 1">
+        </li>
+        <li class="carousel-slide">
+            <img class="carousel-image" src="images/hinh2.jpg" alt="Ảnh game 2">
+        </li>
+        <li class="carousel-slide">
+            <img class="carousel-image" src="images/hinh3.jpg" alt="Ảnh game 3">
+        </li>
+        <li class="carousel-slide">
+            <img class="carousel-image" src="images/hinh4.jpg" alt="Ảnh game 4">
+        </li>
+        <li class="carousel-slide">
+            <img class="carousel-image" src="images/hinh5.jpg" alt="Ảnh game 5">
+        </li>
+        <li class="carousel-slide">
+            <img class="carousel-image" src="images/hinh6.jpg" alt="Ảnh game 6">
+        </li>
+    </ul>
+</div>
