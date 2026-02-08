@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 3 - Đoán Số</title>
+    <style>
+        body { font-family: sans-serif; background: #2c3e50; color: white; text-align: center; padding-top: 50px; }
+        input { padding: 10px; font-size: 16px; width: 100px; text-align: center; }
+        button { padding: 10px 20px; font-size: 16px; background: orange; border: none; cursor: pointer; color: white; }
+    </style>
+</head>
+<body>
+    <a href="index.html" style="color:white">⬅ Về Menu</a>
+    <h1>GAME ĐOÁN SỐ (1-100)</h1>
+    <input type="number" id="gs">
+    <button onclick="check()">Đoán</button>
+    <h3 id="msg"></h3>
+    <script>
+        let res = Math.floor(Math.random() * 100) + 1;
+        function check() {
+            let v = parseInt(document.getElementById('gs').value);
+            let m = document.getElementById('msg');
+            if (v == res) { m.innerText = "🎉 CHÚC MỪNG! ĐÚNG RỒI!"; m.style.color="lightgreen"; }
+            else if (v < res) m.innerText = "Thấp quá! Tăng lên ⬆";
+            else m.innerText = "Cao quá! Giảm xuống ⬇";
+        }
+    </script>
+</body>
+</html>

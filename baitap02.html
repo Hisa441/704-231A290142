@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 2 - Todo List</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; display: flex; justify-content: center; padding-top: 50px; }
+        .box { background: white; padding: 20px; width: 400px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input { width: 70%; padding: 10px; }
+        button { padding: 10px; background: green; color: white; border: none; cursor: pointer; }
+        ul { list-style: none; padding: 0; }
+        li { background: #eee; margin: 5px 0; padding: 10px; display: flex; justify-content: space-between; }
+        .del { background: red; color: white; border: none; cursor: pointer; margin-left: 5px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <a href="index.html">⬅ Về Menu</a>
+        <h2>Todo List (231A290142)</h2>
+        <input type="text" id="inp" placeholder="Thêm việc...">
+        <button onclick="add()">Thêm</button>
+        <ul id="list"></ul>
+    </div>
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('todo_231A290142')) || [];
+        function render() {
+            document.getElementById('list').innerHTML = tasks.map((t, i) => 
+                `<li>${t} <button class="del" onclick="del(${i})">Xóa</button></li>`).join('');
+            localStorage.setItem('todo_231A290142', JSON.stringify(tasks));
+        }
+        function add() {
+            let val = document.getElementById('inp').value;
+            if(val) { tasks.push(val); document.getElementById('inp').value=''; render(); }
+        }
+        function del(i) { tasks.splice(i, 1); render(); }
+        render();
+    </script>
+</body>
+</html>
